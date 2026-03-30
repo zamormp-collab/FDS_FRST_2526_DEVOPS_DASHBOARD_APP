@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devops-dashboard-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=devops_dashboard
+      - DB_USER=dashboard_user
+      - DB_PASSWORD=dashboard_password
+    depends_on:
+      - postgres
+    networks:
+      - devops-net
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: devops-dashboard-db
+    environment:
+      - POSTGRES_DB=devops_dashboard
+      - POSTGRES_USER=dashboard_user
+      - POSTGRES_PASSWORD=dashboard_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - devops-net
+    restart: unless-stopped
+
+networks:
+  devops-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
