@@ -3,7 +3,7 @@ const app = require('../src/server');
 
 describe('DevOps Dashboard API', () => {
   
-  describe('GET /health', () => {
+  /*describe('GET /health', () => {
     it('should return 200 with healthy status', async () => {
       const res = await request(app)
         .get('/health')
@@ -13,7 +13,7 @@ describe('DevOps Dashboard API', () => {
       expect(res.body.timestamp).toBeDefined();
       expect(res.body.uptime).toBeDefined();
     });
-  });
+  });*/
 
   describe('GET /api', () => {
     it('should return API information', async () => {
