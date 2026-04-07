@@ -7,7 +7,9 @@
     "start": "node src/server.js",
     "dev": "node src/server.js",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build": "npm ci && npm run test",
+    "publish:artifact": "node scripts/create-artifact.js"
   },
   "keywords": [
     "devops",
@@ -24,6 +26,12 @@
   },
   "devDependencies": {
     "jest": "^29.5.0",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "semantic-release": "^21.1.2",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "@semantic-release/npm": "^11.0.2",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/exec": "^6.0.3"
   }
 }

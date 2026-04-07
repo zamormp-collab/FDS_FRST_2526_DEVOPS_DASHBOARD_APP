@@ -56,3 +56,38 @@ jobs:
       with:
         context: .
         push: false
+
+  deploy:
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Use Node.js 18
+      uses: actions/setup-node@v6
+      with:
+        node-version: 18.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npx semantic-release
+    
+    - name: Upload artifacts to GitHub Release
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: distribution-artifacts
+        path: dist/*.tar.gz
+        retention-days: 90
+
