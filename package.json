@@ -9,7 +9,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "build": "npm ci && npm run test",
-    "publish:artifact": "node scripts/create-artifact.js"
+    "publish:artifact": "node scripts/create-artifact.js",
     "lint": "eslint src/ --fix"
   },
   "keywords": [
